@@ -24,13 +24,7 @@ const StepForm = loadable(() => import('Pages/Form/StepForm'), { fallback: <Load
 const HighForm = loadable(() => import('Pages/Form/HighForm'), { fallback: <Loading size='large' /> })
 
 // 表格
-const TableArticle = loadable(() => import('Pages/Table/TableSearch/Article'), {
-  fallback: <Loading size='large' />
-})
-const TableProject = loadable(() => import('Pages/Table/TableSearch/Project'), { fallback: <Loading size='large' /> })
-const TableApplication = loadable(() => import('Pages/Table/TableSearch/Application'), {
-  fallback: <Loading size='large' />
-})
+const TableSearch = loadable(() => import('Pages/Table/TableSearch'), { fallback: <Loading size='large' /> })
 const TableQuery = loadable(() => import('Pages/Table/Query'), { fallback: <Loading size='large' /> })
 const TableStandard = loadable(() => import('Src/pages/Table/Standard'), { fallback: <Loading size='large' /> })
 
@@ -181,16 +175,16 @@ const routerList: RouteListType[] = [
               },
               {
                 path: '/table/search/article',
-                component: TableArticle
+                component: TableSearch
               },
               {
                 path: '/table/search/project',
-                component: TableProject,
+                component: TableSearch,
                 roles: ['admin']
               },
               {
                 path: '/table/search/application',
-                component: TableApplication
+                component: TableSearch
               },
               {
                 redirect: '/table/search/article'

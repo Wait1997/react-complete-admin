@@ -1,5 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-export default function Article() {
-  return <div>文章</div>
-}
+export default memo(function Article() {
+  return (
+    <>
+      <div>文章</div>
+    </>
+  )
+})
