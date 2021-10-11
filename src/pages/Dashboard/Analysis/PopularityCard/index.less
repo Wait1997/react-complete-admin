@@ -1,0 +1,77 @@
+.pro-card {
+  margin-top: 24px;
+}
+
+.extra-card {
+  display: flex;
+  align-items: center;
+
+  .extra-title {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+
+    .title {
+      padding: 12px;
+      cursor: pointer;
+
+      &.currentDate {
+        color: #1890ff;
+      }
+
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  }
+}
+
+.count-rank {
+  padding: 0 32px 32px 72px;
+
+  .count-list {
+    margin-top: 25px;
+
+    .count-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+
+      .count-left {
+        display: flex;
+        align-items: center;
+
+        .count-num {
+          width: 20px;
+          height: 20px;
+          margin-right: 16px;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 20px;
+          text-align: center;
+          border-radius: 20px;
+
+          &.count-ranking {
+            color: #fff;
+            background-color: #314659;
+          }
+        }
+
+        .count-content {
+          margin-right: 8px;
+          overflow: hidden;
+          color: rgba(0, 0, 0, 0.85);
+          font-size: 14px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .count-right {
+        color: rgba(0, 0, 0, 0.85);
+        font-size: 14px;
+      }
+    }
+  }
+}

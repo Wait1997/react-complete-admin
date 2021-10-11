@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "jsx": "react",
+    "isolatedModules": true,
+    "strict": true,
+    "sourceMap": true,
+
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "Src/*": ["src/*"],
+      "Pages/*": ["src/pages/*"],
+      "Components/*": ["src/components/*"],
+      "Router/*": ["src/router/*"],
+      "Assets/*": ["src/assets/*"],
+      "Utils/*": ["src/utils/*"],
+      "Config/*": ["src/config/*"],
+      "Api/*": ["src/api/*"]
+    },
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+
+    "noEmit": true
+  },
+  "exclude": ["node_modules"]
+}
