@@ -1,8 +1,15 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { UserInfo } from 'Src/store/reducers/user'
 import { Language } from 'Src/locales'
 import { Layout, Menu, Dropdown } from 'antd'
-import { MenuUnfoldOutlined, MenuFoldOutlined, SmileOutlined, GlobalOutlined } from '@ant-design/icons'
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  SmileOutlined,
+  GlobalOutlined,
+  FullscreenExitOutlined,
+  FullscreenOutlined
+} from '@ant-design/icons'
 import cn from 'classnames'
 import { LangContext, LangContextType } from '../LangProvider'
 import './index.less'
@@ -28,6 +35,38 @@ export default function MenuHeader({
   fixedHeader = true
 }: React.PropsWithChildren<HeaderType>) {
   const { checkChange } = useContext<LangContextType>(LangContext)
+  const [fullScreen, setFullScreen] = useState(false)
+
+  // 进入全屏
+  const requestFullScreen = () => {
+    const element: HTMLElement = document.documentElement
+
+    // 判断各种浏览器，找到正确的方法
+    const requestMethod =
+      element.requestFullscreen || // W3C
+      (element as any).webkitRequestFullScreen || // Chrome等
+      (element as any).mozRequestFullScreen || // FireFox
+      (element as any).msRequestFullscreen // IE11
+    if (requestMethod) {
+      requestMethod.call(element)
+    }
+    setFullScreen(true)
+  }
+
+  // 退出全屏
+  const exitFullScreen = () => {
+    // 判断各种浏览器，找到正确的方法
+    const element: Document = document
+    const exitMethod =
+      element.exitFullscreen || // W3C
+      (element as any).mozCancelFullScreen || // firefox
+      (element as any).webkitExitFullscreen || // Chrome等
+      (element as any).msExitFullscreen // IE11
+    if (exitMethod) {
+      exitMethod.call(element)
+    }
+    setFullScreen(false)
+  }
 
   const languageEl = useMemo(() => {
     return (
@@ -109,6 +148,13 @@ export default function MenuHeader({
             {children}
           </div>
           <div className='head-right'>
+            <span className='fullscreen-wrap'>
+              {fullScreen ? (
+                <FullscreenExitOutlined className='fullscreen-icon' onClick={exitFullScreen} />
+              ) : (
+                <FullscreenOutlined className='fullscreen-icon' onClick={requestFullScreen} />
+              )}
+            </span>
             {languageEl}
             {userInfoEl}
           </div>
