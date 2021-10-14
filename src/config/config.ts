@@ -16,18 +16,17 @@ function getBaseURL(): BaseURLView {
   let webURL: string
 
   if (isLocal) {
-    // url = window.location.origin
     url = `${protocol}//${hostname}:${port}`
-    webURL = '//dev-cs.xiaoheiban.cn'
+    webURL = `${protocol}//${hostname}:${port}`
   } else if (isDev) {
-    url = '//dev-platform.xiaoheiban.cn'
-    webURL = '//dev-cs.xiaoheiban.cn'
+    url = ''
+    webURL = ''
   } else if (isPre) {
-    url = '//pre-platform.xiaoheiban.cn'
-    webURL = '//pre-cs.xiaoheiban.cn'
+    url = ''
+    webURL = ''
   } else {
-    url = '//platform.xiaoheiban.cn'
-    webURL = '//cs.xiaoheiban.cn'
+    url = ''
+    webURL = ''
   }
 
   return {

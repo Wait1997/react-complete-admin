@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { logout, setCollapsed } from 'Src/store/actions'
@@ -15,13 +15,26 @@ const BasicLayout: React.FC<any> = (props) => {
   const { userInfo, collapsed, children } = props
   const history = useHistory()
 
+  const [options, setOptions] = useState<Array<{ value: string; title: string }>>([])
+
+  const handleSearch = (value: string) => {
+    if (value) {
+      // eslint-disable-next-line no-console
+      console.log(value)
+    } else {
+      setOptions([])
+    }
+  }
+
   return (
     <Layout className='basic-layout'>
       <MenuSide className='basic-sider' data={menuList} collapsed={collapsed} />
       <Layout className='content-layout'>
         <Header
+          options={options}
           collapsed={collapsed}
           userInfo={userInfo}
+          onSearch={handleSearch}
           onToggle={(value) => {
             // 切换菜单展开/收起放在redux中
             props.setCollapsed(value)

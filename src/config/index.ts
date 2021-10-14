@@ -2,14 +2,14 @@
  * @Author: @guofang
  * @Date: 2021-05-24 22:52:03
  * @Last Modified by: @guofang
- * @Last Modified time: 2021-09-08 09:23:49
+ * @Last Modified time: 2021-10-14 12:36:19
  */
 
 import Axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios'
 import { baseURL, baseWebURL } from './config'
 
 import { WebReq, Response } from './url'
-import { getHeaders } from './utils'
+import { getHeaders, genUrl } from './utils'
 
 // 继承axiosRequestConfig并添加一个类型
 export interface CustomAxiosRequestConfig extends AxiosRequestConfig {
@@ -27,6 +27,9 @@ export interface Options {
 }
 
 export class Webapi {
+  /**
+   * 初始化的axios实例
+   */
   private axios: AxiosInstance
 
   /**
@@ -42,6 +45,7 @@ export class Webapi {
   constructor(options: Options) {
     this.axios = Axios.create(options.config)
     this.reqInterceptors = this.axios.interceptors.request.use((config: CustomAxiosRequestConfig) => {
+      // 添加请求头
       config.headers = {
         ...config.headers,
         ...getHeaders(config)
@@ -84,6 +88,12 @@ export class Webapi {
   }
 
   private api<T>(url: string, req: WebReq, method: Method = 'get'): Promise<Response<T>> {
+    /**
+     * @description get|delete请求传参数和post|put|patch一致
+     */
+    if (url.split('?')[1] || /get|delete/i.test(method)) {
+      url = genUrl(url, req.params)
+    }
     method = method.toLocaleLowerCase() as Method
     switch (method) {
       case 'get':

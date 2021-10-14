@@ -12,6 +12,7 @@ import {
 } from '@ant-design/icons'
 import cn from 'classnames'
 import { LangContext, LangContextType } from '../LangProvider'
+import HeadSearch from '../HeadSearch'
 import './index.less'
 
 const { Header } = Layout
@@ -22,17 +23,23 @@ export interface HeaderType {
   fixedHeader?: boolean
   collapsed: boolean
   userInfo: UserInfo
+  showSearch?: boolean
+  options: Array<{ value: string; title: string }>
   onToggle: (value: boolean) => void
   onLogout: () => void
+  onSearch: (value: string) => void
 }
 
 export default function MenuHeader({
   collapsed,
   userInfo,
+  showSearch = false,
+  options,
   onLogout,
   onToggle,
   children,
-  fixedHeader = true
+  fixedHeader = true,
+  onSearch
 }: React.PropsWithChildren<HeaderType>) {
   const { checkChange } = useContext<LangContextType>(LangContext)
   const [fullScreen, setFullScreen] = useState(false)
@@ -148,6 +155,7 @@ export default function MenuHeader({
             {children}
           </div>
           <div className='head-right'>
+            {showSearch && <HeadSearch options={options} onSearch={onSearch} />}
             <span className='fullscreen-wrap'>
               {fullScreen ? (
                 <FullscreenExitOutlined className='fullscreen-icon' onClick={exitFullScreen} />

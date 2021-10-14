@@ -8,7 +8,7 @@ export interface WebReq {
 /**
  * @description 响应类型
  */
-export interface Response<T> {
+export interface Response<T = any> {
   code: number
   data: T
   message: string | null
