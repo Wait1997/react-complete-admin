@@ -56,6 +56,7 @@ export interface RouteListType {
   component?: LoadableComponent<any>
 }
 
+// path: '/user' 一定要写在 '/' 前面
 const routerList: RouteListType[] = [
   {
     path: '/user',
@@ -70,8 +71,7 @@ const routerList: RouteListType[] = [
         component: Login
       },
       {
-        path: '',
-        component: NoFound
+        redirect: '/user/login'
       }
     ]
   },
@@ -260,6 +260,7 @@ const routerList: RouteListType[] = [
       },
       {
         path: '/echarts',
+        roles: ['admin'],
         children: [
           {
             path: '/echarts',
@@ -267,15 +268,18 @@ const routerList: RouteListType[] = [
           },
           {
             path: '/echarts/keyboard',
-            component: KeyBoard
+            component: KeyBoard,
+            roles: ['admin']
           },
           {
             path: '/echarts/line',
-            component: LineCharts
+            component: LineCharts,
+            roles: ['admin']
           },
           {
             path: '/echarts/mix-chart',
-            component: MixCharts
+            component: MixCharts,
+            roles: ['admin']
           }
         ]
       },

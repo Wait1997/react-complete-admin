@@ -21,8 +21,12 @@ export default function UserLayout(props: any) {
         <Switch>
           {children.map((route: any) => {
             const Component = route && route.component
+            // 这里是为了路由进入时重定向
             if (route.redirect) {
-              return <Redirect exact key={route.path} from={route.path} to={route.redirect} />
+              if (route.path) {
+                return <Redirect exact key={route.path} from={route.path} to={route.redirect} />
+              }
+              return <Redirect key={route.redirect} to={route.redirect} />
             }
             return (
               <Route

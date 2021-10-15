@@ -1,32 +1,17 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo } from 'react'
 import { Card, Tag, Typography, Divider } from 'antd'
 import VirtualList from '../VirtualList'
 import './index.less'
-
-function getDataList() {
-  const list = Array.from({ length: 200 }).fill(0)
-  return list.map((item, index) => ({
-    title: `react列表项${index}`,
-    tags: ['react', 'rollup'],
-    content:
-      '落日与晚风，深情地相拥，曾相遇的路口，记忆盘旋了很久，退后的借口，失落的相守，已无法再陪你，到黑夜之后，走了多远 多久才敢抬头，看见孤独的沙漠 都有一片绿洲，再也不敢 轻易施舍温柔，怕在下一个路口 等不到你回眸'
-  }))
-}
 
 export type DataListType = {
   title: string
   tags: string[]
   content: string
 }
-
-export default memo(function Project() {
-  const [dataList, setDataList] = useState<DataListType[]>([])
-
-  useEffect(() => {
-    const list = getDataList()
-    setDataList(list)
-  }, [])
-
+export interface ProjectProps {
+  dataList: DataListType[]
+}
+export default memo(function Project({ dataList }: ProjectProps) {
   return (
     <>
       <Card bodyStyle={{ padding: 16 }}>项目</Card>

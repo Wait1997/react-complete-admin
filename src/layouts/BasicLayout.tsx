@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { logout, setCollapsed } from 'Src/store/actions'
-import { menuList } from 'Utils/menuList'
 import { Layout } from 'antd'
 import ErrorBoundary from 'Src/components/ErrorBoundary'
 import MenuSide from 'Components/Menu'
@@ -26,14 +25,22 @@ const BasicLayout: React.FC<any> = (props) => {
     }
   }
 
+  // header中需要显示的信息
+  const headUserInfo = {
+    name: userInfo.name,
+    avatar: userInfo.avatar,
+    role: userInfo.role,
+    token: userInfo.token
+  }
+
   return (
     <Layout className='basic-layout'>
-      <MenuSide className='basic-sider' data={menuList} collapsed={collapsed} />
+      <MenuSide className='basic-sider' data={userInfo.menuList} collapsed={collapsed} />
       <Layout className='content-layout'>
         <Header
           options={options}
           collapsed={collapsed}
-          userInfo={userInfo}
+          userInfo={headUserInfo}
           onSearch={handleSearch}
           onToggle={(value) => {
             // 切换菜单展开/收起放在redux中
@@ -43,7 +50,7 @@ const BasicLayout: React.FC<any> = (props) => {
             await props.logout(userInfo.token)
             history.replace('/user/login')
           }}>
-          <Breadcrumb menuList={menuList} />
+          <Breadcrumb menuList={userInfo.menuList} />
         </Header>
         <ErrorBoundary>
           <Content className='content' list={children} />

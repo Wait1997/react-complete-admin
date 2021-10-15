@@ -169,7 +169,7 @@ export const menuList: MenuType[] = [
     title: '图表',
     path: '/echarts',
     icon: 'charts',
-    roles: ['admin', 'user'],
+    roles: ['admin'],
     children: [
       {
         title: '键盘图表',
@@ -184,7 +184,7 @@ export const menuList: MenuType[] = [
       {
         title: '混合图表',
         path: '/echarts/mix-chart',
-        roles: ['admin', 'user']
+        roles: ['admin']
       }
     ]
   },

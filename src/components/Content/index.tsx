@@ -1,11 +1,12 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { Layout } from 'antd'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { Redirect, Switch, Route, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RouteListType } from 'Src/utils/routeList'
 import NoAuth from 'Src/pages/ErrorPage/403'
+import './index.less'
 
 const { Content } = Layout
 export interface ContentProps {
@@ -51,6 +52,7 @@ export default function LayoutContent({ list, className }: ContentProps) {
           }
           // 如果存在子路由 则循环递归子路由
           if (route.children) {
+            // 如果父级没有权限 则不需要做权限的校验 因为递归到子级时子级会去校验
             return (
               <Route key={route.path} path={route.path}>
                 {handleRoute(route.children)}
@@ -69,10 +71,12 @@ export default function LayoutContent({ list, className }: ContentProps) {
       </Switch>
     )
   }
+
+  // cssTransition动画目前不生效
   return (
     <Content className={className}>
       <TransitionGroup>
-        <CSSTransition classNames='fade' key={location.pathname} timeout={300} exit={false}>
+        <CSSTransition classNames='fade' key={location.pathname} timeout={300} exit={false} unmountOnExit>
           {handleRoute(list)}
         </CSSTransition>
       </TransitionGroup>

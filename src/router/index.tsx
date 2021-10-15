@@ -11,9 +11,11 @@ function Router(props: any) {
 
   const routeEnter = (route: RouteListType, rest: any) => {
     const Component = route.component as any
+    // token不存在 重定向
     if (!token) {
       return <Redirect to='/user' />
     }
+    // 没有获取到角色 获取角色信息(刷新浏览器时)
     if (!role) {
       userInfo(token).then(() => {
         return <Component children={route.children} {...rest} />
@@ -31,9 +33,9 @@ function Router(props: any) {
             <Route
               key={route.path}
               path={route.path}
-              render={({ ...rest }) =>
-                route.path === '/' ? routeEnter(route, rest) : <Component children={route.children} {...rest} />
-              }
+              render={({ ...rest }) => {
+                return route.path === '/' ? routeEnter(route, rest) : <Component children={route.children} {...rest} />
+              }}
             />
           )
         })}

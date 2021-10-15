@@ -1,5 +1,6 @@
+import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { menuList, MenuType } from 'Src/utils/menuList'
+import { MenuType } from 'Src/utils/menuList'
 
 function reduceList(pathname: string, arrList: MenuType[]): void {
   for (const menu of arrList) {
@@ -14,6 +15,7 @@ function reduceList(pathname: string, arrList: MenuType[]): void {
 
 export default function useTitle() {
   const location = useLocation()
+  const menuList = useSelector((state: any) => state.user.menuList)
   const { pathname } = location
   reduceList(pathname, menuList)
 }

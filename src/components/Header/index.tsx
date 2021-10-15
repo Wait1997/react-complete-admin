@@ -22,7 +22,7 @@ export interface HeaderType {
   collapsedWidth?: number
   fixedHeader?: boolean
   collapsed: boolean
-  userInfo: UserInfo
+  userInfo: Omit<UserInfo, 'menuList'>
   showSearch?: boolean
   options: Array<{ value: string; title: string }>
   onToggle: (value: boolean) => void
