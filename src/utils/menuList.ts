@@ -126,12 +126,6 @@ export const menuList: MenuType[] = [
     roles: ['admin', 'user'],
     children: [
       {
-        title: '引导页',
-        path: '/components/guide',
-        icon: 'key',
-        roles: ['admin', 'user']
-      },
-      {
         title: 'Excel',
         path: '/components/excel',
         roles: ['admin', 'user'],
@@ -149,18 +143,36 @@ export const menuList: MenuType[] = [
         ]
       },
       {
-        title: '富文本',
-        path: '/components/richtext',
-        roles: ['admin']
-      },
-      {
         title: 'Markdown',
         path: '/components/markdown',
+        roles: ['admin', 'user'],
+        children: [
+          {
+            path: '/components/markdown/react-markdown',
+            title: 'MarkDown',
+            roles: ['admin', 'user']
+          },
+          {
+            path: '/components/markdown/bytemd',
+            title: 'Bytemd',
+            roles: ['admin', 'user']
+          }
+        ]
+      },
+      {
+        title: '富文本编辑器',
+        path: '/components/editor',
         roles: ['admin', 'user']
       },
       {
         title: '拖拽组件',
         path: '/components/draggable',
+        roles: ['admin', 'user']
+      },
+      {
+        title: 'Jzip',
+        path: '/components/zip',
+        icon: 'key',
         roles: ['admin', 'user']
       }
     ]

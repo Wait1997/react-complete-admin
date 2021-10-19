@@ -29,11 +29,14 @@ const TableQuery = loadable(() => import('Pages/Table/Query'), { fallback: <Load
 const TableStandard = loadable(() => import('Src/pages/Table/Standard'), { fallback: <Loading size='large' /> })
 
 // 组件
-const Guide = loadable(() => import('Pages/Component/Guide'), { fallback: <Loading size='large' /> })
+const Zip = loadable(() => import('Pages/Component/Zip'), { fallback: <Loading size='large' /> })
 const ExportExcel = loadable(() => import('Pages/Component/Excel/ExportExcel'), { fallback: <Loading size='large' /> })
 const UploadExcel = loadable(() => import('Pages/Component/Excel/UploadExcel'), { fallback: <Loading size='large' /> })
-const RichText = loadable(() => import('Pages/Component/RichText'), { fallback: <Loading size='large' /> })
-const Markdown = loadable(() => import('Pages/Component/Markdown'), { fallback: <Loading size='large' /> })
+const Editor = loadable(() => import('Pages/Component/Editor'), { fallback: <Loading size='large' /> })
+const Markdown = loadable(() => import('Src/pages/Component/Markdown/ReactMarkdown'), {
+  fallback: <Loading size='large' />
+})
+const Bytemd = loadable(() => import('Pages/Component/Markdown/Bytemd'), { fallback: <Loading size='large' /> })
 const Draggable = loadable(() => import('Pages/Component/Draggable'), { fallback: <Loading size='large' /> })
 
 // 图表
@@ -211,12 +214,7 @@ const routerList: RouteListType[] = [
         children: [
           {
             path: '/components',
-            redirect: '/components/guide'
-          },
-          {
-            path: '/components/guide',
-            component: Guide,
-            roles: ['admin', 'user']
+            redirect: '/components/excel'
           },
           {
             path: '/components/excel',
@@ -239,14 +237,25 @@ const routerList: RouteListType[] = [
             ]
           },
           {
-            path: '/components/richtext',
-            component: RichText,
-            roles: ['admin']
-          },
-          {
             path: '/components/markdown',
-            component: Markdown,
-            roles: ['admin', 'user']
+            roles: ['admin', 'user'],
+            children: [
+              {
+                path: '/components/markdown',
+                redirect: '/components/markdown/react-markdown'
+              },
+              {
+                path: '/components/markdown/react-markdown',
+                component: Markdown
+              },
+              {
+                path: '/components/markdown/bytemd',
+                component: Bytemd
+              },
+              {
+                redirect: '/components/markdown/react-markdown'
+              }
+            ]
           },
           {
             path: '/components/draggable',
@@ -254,7 +263,17 @@ const routerList: RouteListType[] = [
             roles: ['admin', 'user']
           },
           {
-            redirect: '/components/richtext'
+            path: '/components/editor',
+            component: Editor,
+            roles: ['admin']
+          },
+          {
+            path: '/components/zip',
+            component: Zip,
+            roles: ['admin', 'user']
+          },
+          {
+            redirect: '/components/excel'
           }
         ]
       },
