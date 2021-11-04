@@ -1,0 +1,29 @@
+.toolbar-button {
+  position: relative;
+  display: inline-block;
+  padding: 8px 24px;
+  overflow: hidden;
+  color: #303133;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &.disabled {
+    color: #bfbfbf;
+    background-color: transparent;
+    cursor: not-allowed;
+  }
+
+  .toolbar-button-text {
+    margin-left: 3px;
+    font-size: 14px;
+  }
+}
+
+.icon-button-file {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  display: none;
+  opacity: 0;
+}

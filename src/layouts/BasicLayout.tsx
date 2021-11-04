@@ -8,6 +8,7 @@ import MenuSide from 'Components/Menu'
 import Breadcrumb from 'Components/Breadcrumb'
 import Header from 'Components/Header'
 import Content from 'Components/Content'
+import RightPanel from 'Components/RightPanel'
 import './BasicLayout.less'
 
 const BasicLayout: React.FC<any> = (props) => {
@@ -36,6 +37,7 @@ const BasicLayout: React.FC<any> = (props) => {
   return (
     <Layout className='basic-layout'>
       <MenuSide className='basic-sider' data={userInfo.menuList} collapsed={collapsed} />
+      {process.env.NODE_ENV === 'development' && <RightPanel />}
       <Layout className='content-layout'>
         <Header
           options={options}
