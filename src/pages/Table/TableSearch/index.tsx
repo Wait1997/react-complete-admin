@@ -1,12 +1,15 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Tabs, Input } from 'antd'
 import useTitle from 'Src/hooks/useTitle'
 import Article from './Article'
 import Project, { DataListType } from './Project'
 import Application from './Application'
+import { FormValuesType } from '../component/SearchTag'
 import './index.less'
+import { useActiveKey } from './hooks/useActiveKey'
 
 const { TabPane } = Tabs
 const { Search } = Input
@@ -21,26 +24,86 @@ function getDataList() {
   }))
 }
 
+function getTags() {
+  const list = Array.from({ length: 12 }).fill(0)
+  return list.map((item, index) => ({
+    title: `类目${index + 1}`,
+    key: index
+  }))
+}
+
+function getOwners() {
+  return [
+    { value: 'zhangsan', title: '张三' },
+    { value: 'lisi', title: '李四' },
+    { value: 'wangwu', title: '王五' },
+    { value: 'lixiang', title: '理想' },
+    { value: 'xiwang', title: '希望' },
+    { value: 'self', title: '自己' }
+  ]
+}
+
 export type TabsType = 'article' | 'project' | 'application'
 
 // 这里的tab不需要通过useSate来控制key 直接通过路由就可以了
 export default function TableSearch() {
   useTitle()
   const history = useHistory()
-  const { pathname } = useLocation()
+  const [defaultActiveKey, pathList] = useActiveKey()
   const role = useSelector((state: any) => state.user.role)
-  const pathList = pathname.split('/').filter(Boolean)
-
-  const defaultActiveKey = pathList[pathList.length - 1]
 
   const [dataList, setDataList] = useState<DataListType[]>([])
+  // 选中的tag
+  const [tagList, setTagList] = useState<Array<{ title: string; key: number; isChecked: boolean }>>([])
+  const [optionList, setOptionList] = useState<Array<{ title: string; value: string }>>([])
+  // 选中的下拉框
+  const [selectValues, setSelectValues] = useState<string[]>(['zhangsan', 'lisi'])
+  // 初始化表单搜索值
+  const [formValues, setFormValues] = useState<FormValuesType>({ activeUser: 'xiaozhang', evaluate: 'good' })
+  const [contentList, setContentList] = useState<string[]>([])
 
   useEffect(() => {
+    if (defaultActiveKey === 'article') {
+      const list = getTags()
+      const options = getOwners()
+      list.unshift({ title: '全部', key: -1 })
+      // 添加是否可选中项
+      setTagList(list.map((item) => ({ ...item, isChecked: false })))
+      setOptionList(options)
+    }
     if (defaultActiveKey === 'project') {
       const list = getDataList()
       setDataList(list)
     }
   }, [defaultActiveKey])
+
+  useEffect(() => {
+    const restTags = tagList.filter((item) => {
+      if (item.key === -1 || !item.isChecked) {
+        return false
+      }
+      return true
+    })
+    // 组成接口需要的数据请求数据
+    const apiDataModel = {
+      selectValues,
+      formValues,
+      tags: restTags
+    }
+    console.log(apiDataModel)
+    setContentList([
+      'Racing car sprays burning fuel into crowd.',
+      'Japanese princess to wed commoner.',
+      'Australian walks 100km after outback crash.',
+      'Man charged over missing wedding girl.',
+      'Los Angeles battles huge wildfires.',
+      'Racing car sprays burning fuel into crowd.',
+      'Japanese princess to wed commoner.',
+      'Australian walks 100km after outback crash.',
+      'Man charged over missing wedding girl.',
+      'Los Angeles battles huge wildfires.'
+    ])
+  }, [tagList, selectValues, formValues])
 
   return (
     <>
@@ -72,7 +135,22 @@ export default function TableSearch() {
             history.push(`${path}/${key}`)
           }}>
           <TabPane tab='文章' key='article'>
-            <Article />
+            <Article
+              tagList={tagList}
+              options={optionList}
+              selectValues={selectValues}
+              contentList={contentList}
+              selectedTags={(values) => {
+                setTagList(values)
+              }}
+              onChangeSelect={(values) => {
+                setSelectValues(values)
+              }}
+              defaultFormValue={formValues}
+              getFormValues={(values: FormValuesType) => {
+                setFormValues(values)
+              }}
+            />
           </TabPane>
           {role.includes('admin') && (
             <TabPane tab='项目' key='project'>
