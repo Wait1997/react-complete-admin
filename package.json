@@ -19,23 +19,6 @@
     "ie >= 9",
     "not op_mini all"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint --config .commitlintrc.js -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js}": [
-      "eslint --config .eslintrc.js"
-    ],
-    "*.{css,less,scss}": [
-      "stylelint --config .stylelintrc.js"
-    ],
-    "*.{ts,tsx,js,json,html,yml,css,less,scss,md}": [
-      "prettier --write"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wait1997/quick-start.git"
@@ -55,6 +38,7 @@
     "@babel/preset-typescript": "^7.13.0",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
+    "@types/file-saver": "^2.0.4",
     "@types/loadable__component": "^5.13.4",
     "@types/lodash": "^4.14.172",
     "@types/numeral": "^2.0.1",
@@ -125,8 +109,11 @@
     "@ant-design/charts": "^1.2.13",
     "@ant-design/icons": "^4.6.3",
     "@babel/runtime-corejs3": "^7.14.0",
+    "@bytemd/plugin-gemoji": "^1.10.13",
     "@bytemd/plugin-gfm": "^1.10.13",
     "@bytemd/plugin-highlight": "^1.10.13",
+    "@bytemd/plugin-highlight-ssr": "^1.10.13",
+    "@bytemd/plugin-medium-zoom": "^1.10.13",
     "@bytemd/react": "^1.10.13",
     "@loadable/component": "^5.15.0",
     "@rematch/core": "^2.1.0",
@@ -135,6 +122,8 @@
     "axios": "^0.21.1",
     "braft-editor": "^2.3.9",
     "classnames": "^2.3.1",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.7.1",
     "lodash": "^4.17.21",
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",

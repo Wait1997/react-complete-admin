@@ -1,7 +1,8 @@
 import React, { useRef, forwardRef } from 'react'
+import { message } from 'antd'
+import uuid from 'Utils/uuid'
 import cn from 'classnames'
 import './index.less'
-import { message } from 'antd'
 
 export type FileType = 'image' | 'audio' | 'video' | 'attachment'
 
@@ -10,7 +11,7 @@ export type UploadStatus = 'normal' | 'uploading' | 'success' | 'error'
 export type ButtonType = 'button' | 'file' | 'dropdown'
 
 export interface ToolbarIconButtonProps {
-  icon: React.ReactNode
+  icon?: React.ReactNode
   className?: string
   text?: string
   type?: ButtonType
@@ -46,6 +47,7 @@ export interface IChooseFileResult {
   fileType?: FileType
 }
 
+// 选择上传的文件类型
 export interface FileChooseProps {
   fileType?: FileType
   /**
@@ -68,24 +70,26 @@ export interface UploadProps {
 }
 
 const Upload = forwardRef<HTMLInputElement, UploadProps>(
-  ({ disabled, file, onChooseFile }: UploadProps, ref: React.Ref<HTMLInputElement>) => {
+  ({ disabled = false, file, onChooseFile }: UploadProps, ref: React.Ref<HTMLInputElement>) => {
     // 处理本地文件上传
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const fileData: File[] = Array.prototype.slice.call(event.target.files)
       const newFileData: IFileData[] = []
+      // fileType 为file文件上传做类型限制
 
       const uids = []
       // 是否允许上传
       let isAllowUpload = true
 
       for (const [index, fileItem] of fileData.entries()) {
+        // 10M 大小的限制
         if (fileItem.size > 10 * 1024 * 1024) {
           message.warning(`文件(${fileItem.name})大小超过了10M`)
           isAllowUpload = false
           return
         }
 
-        uids.push(String(Math.random()))
+        uids.push(uuid(32))
         newFileData.push({
           url: URL.createObjectURL(fileItem),
           name: fileItem.name,
@@ -105,7 +109,7 @@ const Upload = forwardRef<HTMLInputElement, UploadProps>(
       }
 
       // 上传到服务器
-      fileData.map((fileItenm, index) => {})
+      // fileData
 
       // 阻止事件冒泡
       event.stopPropagation()
@@ -146,7 +150,7 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
 
 const HBToolbarButton = ({
   icon,
-  className,
+  className = '',
   type = 'file',
   disabled,
   file,
@@ -154,6 +158,7 @@ const HBToolbarButton = ({
   onChooseFile,
   onClick
 }: ToolbarIconButtonProps) => {
+  // input dom
   const fileRef = useRef<HTMLInputElement | null>(null)
 
   // 点击
@@ -162,6 +167,7 @@ const HBToolbarButton = ({
       return
     }
     if (type === 'file' && fileRef.current) {
+      // 触发input上传事件
       fileRef.current?.click()
     }
     // 回调函数

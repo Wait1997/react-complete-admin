@@ -1,38 +1,17 @@
-.basic-layout {
-  min-height: 100% !important;
+.fade-enter {
+  opacity: 0;
+  transition: all 0.3s;
+}
 
-  .basic-sider {
-    height: 100vh;
-    overflow-y: scroll;
+.fade-enter-active {
+  opacity: 1;
+}
 
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-  }
+.fade-exit {
+  opacity: 1;
+}
 
-  .content-layout {
-    min-height: 100vh;
-
-    .content {
-      margin: 16px;
-
-      .fade-enter {
-        opacity: 0;
-        transition: all 0.3s;
-      }
-
-      .fade-enter-active {
-        opacity: 1;
-      }
-
-      .fade-exit {
-        opacity: 1;
-      }
-
-      .fade-exit-active {
-        opacity: 0;
-        transition: all 0.3s;
-      }
-    }
-  }
+.fade-exit-active {
+  opacity: 0;
+  transition: all 0.3s;
 }

@@ -33,7 +33,7 @@ export interface HeaderType {
 export default function MenuHeader({
   collapsed,
   userInfo,
-  showSearch = false,
+  showSearch = true,
   options,
   onLogout,
   onToggle,

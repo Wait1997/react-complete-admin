@@ -2,19 +2,21 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { logout, setCollapsed } from 'Src/store/actions'
-import { Layout } from 'antd'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import ErrorBoundary from 'Src/components/ErrorBoundary'
-import MenuSide from 'Components/Menu'
 import Breadcrumb from 'Components/Breadcrumb'
-import Header from 'Components/Header'
-import RightPanel from 'Components/RightPanel'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import ProLayout from 'Components/ProLayout'
 import './BasicLayout.less'
 
-const BasicLayout: React.FC<any> = (props) => {
-  const { userInfo, collapsed, children } = props
+const BasicLayout: React.FunctionComponent<any> = (props) => {
   const history = useHistory()
   const location = useLocation()
+  const {
+    userInfo: { menuList, name, avatar, role, token },
+    collapsed,
+    children
+  } = props
+  // header中需要显示的信息
+  const headUserInfo = { name, avatar, role, token }
 
   const [options, setOptions] = useState<Array<{ value: string; title: string }>>([])
 
@@ -27,45 +29,28 @@ const BasicLayout: React.FC<any> = (props) => {
     }
   }
 
-  // header中需要显示的信息
-  const headUserInfo = {
-    name: userInfo.name,
-    avatar: userInfo.avatar,
-    role: userInfo.role,
-    token: userInfo.token
-  }
-
   return (
-    <Layout className='basic-layout'>
-      <MenuSide className='basic-sider' data={userInfo.menuList} collapsed={collapsed} />
-      {process.env.NODE_ENV === 'development' && <RightPanel />}
-      <Layout className='content-layout'>
-        <Header
-          options={options}
-          collapsed={collapsed}
-          userInfo={headUserInfo}
-          onSearch={handleSearch}
-          onToggle={(value) => {
-            // 切换菜单展开/收起放在redux中
-            props.setCollapsed(value)
-          }}
-          onLogout={async () => {
-            await props.logout(userInfo.token)
-            history.replace('/user/login')
-          }}>
-          <Breadcrumb menuList={userInfo.menuList} />
-        </Header>
-        <ErrorBoundary>
-          <Layout.Content className='content'>
-            <TransitionGroup>
-              <CSSTransition classNames='fade' key={location.pathname} timeout={300} exit={false} unmountOnExit>
-                {children}
-              </CSSTransition>
-            </TransitionGroup>
-          </Layout.Content>
-        </ErrorBoundary>
-      </Layout>
-    </Layout>
+    <ProLayout
+      collapsed={collapsed}
+      options={options}
+      menuList={menuList}
+      headUserInfo={headUserInfo}
+      breadcrumb={<Breadcrumb menuList={menuList} />}
+      setCollapsed={(value) => {
+        // 切换菜单展开/收起
+        setCollapsed(value)
+      }}
+      onSearch={handleSearch}
+      onLogout={async () => {
+        await props.logout(token)
+        history.replace('/user/login')
+      }}>
+      <TransitionGroup>
+        <CSSTransition classNames='fade' key={location.pathname} timeout={300} exit={false} unmountOnExit>
+          {children}
+        </CSSTransition>
+      </TransitionGroup>
+    </ProLayout>
   )
 }
 

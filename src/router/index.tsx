@@ -61,6 +61,7 @@ function Router(props: any) {
                 // user路由下的表示未登录前的在这里处理
                 if (route.path?.includes('/user')) {
                   const Component = route.component
+                  // token重定向
                   if (token) {
                     return <Redirect to='/dashboard' />
                   }
