@@ -13,7 +13,6 @@
   "editor.renderLineHighlight": "all",
   "editor.wordWrapColumn": 120,
   "editor.formatOnType": true,
-  "editor.renderIndentGuides": true,
   "editor.codeLens": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
@@ -59,5 +58,6 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.guides.indentation": true
 }

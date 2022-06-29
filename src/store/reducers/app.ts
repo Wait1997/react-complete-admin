@@ -1,4 +1,5 @@
 import { get } from 'Src/utils/local-store'
+import { CollapsedProps } from '../actions/app'
 import { SET_COLLAPSED } from '../types'
 
 /**
@@ -12,7 +13,7 @@ const defaultAppInfo: AppType = {
   collapsed: get('collapsed') ? !!Number(get('collapsed')) : false
 }
 
-export default function app(state: AppType = defaultAppInfo, action: any) {
+export default function app(state: AppType = defaultAppInfo, action: CollapsedProps) {
   const { type, payload } = action
   switch (type) {
     case SET_COLLAPSED:

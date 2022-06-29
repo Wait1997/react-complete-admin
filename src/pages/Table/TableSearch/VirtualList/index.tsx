@@ -20,7 +20,6 @@ export interface VirtualListProp<T> {
    */
   dataList: T[]
   className?: string
-  delay?: number
 }
 
 export default function VirtualList<T>({

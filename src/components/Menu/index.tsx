@@ -7,6 +7,7 @@ import getMenuIcon, { iconsMap } from 'Src/utils/icon'
 import Logo from 'Assets/images/logo.svg'
 import cn from 'classnames'
 import './index.less'
+import { RootState } from 'Src/store/reducers'
 
 const { Sider } = Layout
 const { SubMenu, Item } = AntdMenu
@@ -60,7 +61,7 @@ export default function MenuSide({
   const history = useHistory()
   const location = useLocation()
   // 当前用户的角色
-  const role = useSelector((state: any) => state.user.role)
+  const role = useSelector((state: RootState) => state.user.role)
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
 

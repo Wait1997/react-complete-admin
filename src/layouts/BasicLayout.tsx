@@ -15,6 +15,7 @@ const BasicLayout: React.FunctionComponent<any> = (props) => {
     collapsed,
     children
   } = props
+  const { checkoutCollapsed, logoutLogin } = props
   // header中需要显示的信息
   const headUserInfo = { name, avatar, role, token }
 
@@ -38,11 +39,11 @@ const BasicLayout: React.FunctionComponent<any> = (props) => {
       breadcrumb={<Breadcrumb menuList={menuList} />}
       setCollapsed={(value) => {
         // 切换菜单展开/收起
-        setCollapsed(value)
+        checkoutCollapsed(value)
       }}
       onSearch={handleSearch}
       onLogout={async () => {
-        await props.logout(token)
+        await logoutLogin(token)
         history.replace('/user/login')
       }}>
       <TransitionGroup>
@@ -61,5 +62,5 @@ export default connect(
       collapsed: state.app.collapsed
     }
   },
-  { logout, setCollapsed }
+  { logoutLogin: logout, checkoutCollapsed: setCollapsed }
 )(BasicLayout)
