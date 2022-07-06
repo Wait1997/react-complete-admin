@@ -71,7 +71,7 @@ module.exports = {
     app: resolve(PROJECT_PATH, './src/index')
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.json'],
+    extensions: ['.tsx', 'jsx', '.ts', '.js', '.json'],
     alias: {
       Src: resolve(PROJECT_PATH, './src'),
       Pages: resolve(PROJECT_PATH, './src/pages'),
